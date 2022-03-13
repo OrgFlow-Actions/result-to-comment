@@ -79,15 +79,16 @@ jobs:
       # Run OrgFlow command to validate deployment of the would-be result of merging this PR:
       - run: |
           json=$(orgflow env:flowmerge --from="${{ steps.find-source-environment.outputs.environment-name }}" --into="${{ steps.find-target-environment.outputs.environment-name }}" --checkOnly --output=json)
-          json=$(echo $json | jq '.' -c) # Pipe through jq -c to turn pretty JSON into compact one-line
+          json=$(echo $json | jq '.result.environments.into.flowOut' -c)
           echo "::set-output name=result::$json"
         id: env-flowmerge
 
-        # Publish result as a comment on this PR:
+      # Post result as a comment on this PR:
       - uses: orgflow-actions/result2comment@v1
+        if: ${{ steps.env-flowmerge.outputs.result != '' }}
         with:
           issue-number: ${{ github.event.pull_request.number }}
-          result: ${{ steps.env-flowmerge.outputs.result.result.environments.into.flowOut }}
+          result: ${{ steps.env-flowmerge.outputs.result }}
           template-path: env-flow-out.liquid
 ```
 
