@@ -1,0 +1,23 @@
+name: "OrgFlow: Post result as comment"
+author: OrgFlow GmbH
+description: Post the results of an OrgFlow command as a comment on a GitHub issue or pull request
+branding:
+  icon: cloud
+  color: red
+inputs:
+  github-token:
+    description: GitHub access token used to post comment (defaults to `secrets.GITHUB_TOKEN`).
+    required: false
+    default: ${{ secrets.GITHUB_TOKEN }}
+  issue-number:
+    description: ID of issue or pull request to post comment on.
+    required: true
+  result:
+    description: OrgFlow command result JSON output to post as comment.
+    required: true
+  template-path:
+    description: Path to Liquid template used to format the comment (either one of the included templates, or a custom template).
+    required: true
+runs:
+  using: node16
+  main: dist/index.js

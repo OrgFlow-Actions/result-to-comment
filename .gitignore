@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Finder view state file
+.DS_Store
+
+# Source map files are used for local debugging only
+**/*.map

@@ -1,0 +1,42 @@
+# Outbound flow result
+
+{% if result.succeeded %}
+:green_square: Outbound flow was successful after {{ result.attempts.length }} attempts.
+
+- :purple_circle: Detected changes: **{{ stats.counts.components.changed }}**
+- :green_circle: Deployed components: **{{ stats.counts.components.deployed }}**
+- :red_circle: Failed components: **{{ stats.counts.components.failed }}**
+{% else %}
+:red_square: Outbound flow failed after {{ result.attempts.length }} attempts.
+{% endif %}
+
+{% assign deployed = result.components.succeeded %}
+{% assign failed = result.components.failed %}
+
+Deployed components:
+
+{% if deployed.size > 0 %}
+    {% for deployable in deployed %}
+      {% assign component = deployable.component %}
+- :green_circle: {{ component.packageName }}/{{ component.type }}/{{ component.name }}
+    {% endfor %}
+{% else %}
+There were no deployed components.
+{% endif %}
+
+Failed components:
+
+{% if failed.size > 0 %}
+	{% assign tableRows = "" %}
+	{% for undeployable in failed %}
+  		{% assign component = undeployable.result.component %}
+  		{% capture problems %}<ol>{% for problem in undeployable.result.problems %}<li>`{{ problem.archiveFilePath }}`: {{ problem.description }} {% if problem.lineNumber and problem.columnNumber %} (`{{ problem.lineNumber }}:{{ problem.columnNumber }}`) {% endif %}</li>{% endfor %}</ol>{% endcapture %}
+  		{% capture tableRow %}| :red_circle: `{{ component.packageName }}/{{ component.type }}/{{ component.name }}` | `{{ undeployable.failingSinceCommit.hash | slice: 0, 6 }}` {% if undeployable.new %} :new: {% endif %} | {{ problems | strip_newlines }} |{% endcapture %}
+  		{% assign tableRows = tableRows | append: tableRow %}
+	{% endfor %}
+| Component | Failing since | Problems |
+| --------- | ------------- | -------- |
+{{ tableRows }}
+{% else %}
+There were no failed components.
+{% endif %}
