@@ -84,7 +84,7 @@ jobs:
         id: env-flowmerge
 
       # Post result as a comment on this PR:
-      - uses: orgflow-actions/result2comment@v1
+      - uses: orgflow-actions/result-to-comment@v1
         if: ${{ steps.env-flowmerge.outputs.result != '' }}
         with:
           issue-number: ${{ github.event.pull_request.number }}

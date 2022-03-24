@@ -1,5 +1,5 @@
 {
-	"name": "@orgflow-actions/result2comment",
+	"name": "@orgflow-actions/result-to-comment",
 	"main": "dist/index.js",
 	"scripts": {
 		"build": "ncc build main.ts"
