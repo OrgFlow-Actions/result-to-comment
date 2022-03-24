@@ -22,8 +22,8 @@ export async function run()
 
 		const liquid = new Liquid({
 			root: [
-				path.join(__dirname, "../templates"), // Firstly look among built-in templates
-				process.env.GITHUB_WORKSPACE // Secondly look relative to workspace/repo
+				process.env.GITHUB_WORKSPACE, // Firstly look relative to workspace/repo
+				path.join(__dirname, "../templates") // Secondly look among built-in templates
 			]
 		});
 
