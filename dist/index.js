@@ -12753,8 +12753,8 @@ function run() {
             const octokit = github.getOctokit(token);
             const liquid = new liquidjs_1.Liquid({
                 root: [
-                    path.join(__dirname, "../templates"),
-                    process.env.GITHUB_WORKSPACE // Secondly look relative to workspace/repo
+                    process.env.GITHUB_WORKSPACE,
+                    path.join(__dirname, "../templates") // Secondly look among built-in templates
                 ]
             });
             core.debug(`Rendering template '${templatePath}'...`);
