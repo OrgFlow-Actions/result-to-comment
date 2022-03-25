@@ -6,9 +6,8 @@ branding:
   color: red
 inputs:
   github-token:
-    description: GitHub access token used to post comment (defaults to `secrets.GITHUB_TOKEN`).
-    required: false
-    default: ${{ secrets.GITHUB_TOKEN }}
+    description: GitHub access token used to post comment (usually `secrets.GITHUB_TOKEN`).
+    required: true
   issue-number:
     description: ID of issue or pull request to post comment on.
     required: true
