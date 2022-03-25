@@ -31,7 +31,7 @@ This action works on:
 
 | Name            | Required? | Default                | Description                                                                                                      |
 | --------------- | :-------: | ---------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `github-token`  |           | `secrets.GITHUB_TOKEN` | GitHub access token used to post comment (defaults to `secrets.GITHUB_TOKEN`).                                   |
+| `github-token`  |  **Yes**  |                        | GitHub access token used to post comment (usually `${{ secrets.GITHUB_TOKEN }}`).                                   |
 | `issue-number`  |  **Yes**  |                        | ID of issue or pull request to post comment on.                                                                  |
 | `result`        |  **Yes**  |                        | OrgFlow command result JSON output to post as comment.                                                           |
 | `template-path` |  **Yes**  |                        | Path to Liquid template used to format the comment (either one of the included templates, or a custom template). |
@@ -87,6 +87,7 @@ jobs:
       - uses: orgflow-actions/result-to-comment@v1
         if: ${{ steps.env-flowmerge.outputs.result != '' }}
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
           result: ${{ steps.env-flowmerge.outputs.result }}
           template-path: env-flow-out.liquid
