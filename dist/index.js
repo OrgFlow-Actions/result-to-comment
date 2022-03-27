@@ -12758,7 +12758,8 @@ function run() {
                 ]
             });
             core.debug(`Rendering template '${templatePath}'...`);
-            const markdown = yield liquid.renderFile(templatePath);
+            const json = JSON.parse(result);
+            const markdown = yield liquid.renderFile(templatePath, json);
             core.debug("Template rendered successfully.");
             const repositoryParts = process.env.GITHUB_REPOSITORY.split("/");
             const repositoryOwner = repositoryParts[0];
