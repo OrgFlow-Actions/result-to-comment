@@ -13,9 +13,9 @@
 {% assign deployed = result.components.succeeded %}
 {% assign failed = result.components.failed %}
 
+{% if deployed.size > 0 %}
 Deployed components:
 
-{% if deployed.size > 0 %}
     {% for deployable in deployed %}
       {% assign component = deployable.component %}
 - :green_circle: {{ component.packageName }}/{{ component.type }}/{{ component.name }}
@@ -24,10 +24,10 @@ Deployed components:
 There were no deployed components.
 {% endif %}
 
+{% if failed.size > 0 %}
 Failed components:
 
-{% if failed.size > 0 %}
-	{% assign tableRows = "" %}
+{% assign tableRows = "" %}
 	{% for undeployable in failed %}
   		{% assign component = undeployable.result.component %}
   		{% capture problems %}<ol>{% for problem in undeployable.result.problems %}<li>`{{ problem.archiveFilePath }}`: {{ problem.description }} {% if problem.lineNumber and problem.columnNumber %} (`{{ problem.lineNumber }}:{{ problem.columnNumber }}`) {% endif %}</li>{% endfor %}</ol>{% endcapture %}
