@@ -29,7 +29,8 @@ export async function run()
 
 		core.debug(`Rendering template '${templatePath}'...`);
 
-		const markdown = await liquid.renderFile(templatePath);
+		const json = JSON.parse(result);
+		const markdown = await liquid.renderFile(templatePath, json);
 
 		core.debug("Template rendered successfully.");
 
