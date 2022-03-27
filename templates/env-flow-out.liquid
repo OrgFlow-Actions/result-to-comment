@@ -1,13 +1,13 @@
 # Outbound flow result
 
 {% if result.succeeded %}
-:green_square: Outbound flow was successful after {{ result.attempts.length }} attempts.
+:green_square: Outbound flow was successful after {{ stats.counts.attempts }} attempts.
 
 - :purple_circle: Detected changes: **{{ stats.counts.components.changed }}**
 - :green_circle: Deployed components: **{{ stats.counts.components.deployed }}**
 - :red_circle: Failed components: **{{ stats.counts.components.failed }}**
 {% else %}
-:red_square: Outbound flow failed after {{ result.attempts.length }} attempts.
+:red_square: Outbound flow failed after {{ stats.counts.attempts }} attempts.
 {% endif %}
 
 {% assign deployed = result.components.succeeded %}
