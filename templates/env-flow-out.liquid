@@ -3,8 +3,8 @@
 {% if result.succeeded %}
 :green_square: Outbound flow was successful after {{ stats.counts.attempts }} attempts.
 
-- :purple_circle: Detected changes: **{{ stats.counts.components.changed }}**
-- :green_circle: Deployed components: **{{ stats.counts.components.deployed }}**
+- :purple_circle: Detected changes: **{{ stats.counts.changes.added }} added, {{ stats.counts.changes.modified }} modified, {{ stats.counts.changes.deleted }} deleted**
+- :green_circle: Successful components: **{{ stats.counts.components.succeeded }}**
 - :red_circle: Failed components: **{{ stats.counts.components.failed }}**
 {% else %}
 :red_square: Outbound flow failed after {{ stats.counts.attempts }} attempts.
@@ -17,7 +17,7 @@
 Deployed components:
 
     {% for deployable in deployed %}
-      {% assign component = deployable.component %}
+      {% assign component = deployable.result.component %}
 - :green_circle: {{ component.packageName }}/{{ component.type }}/{{ component.name }}
     {% endfor %}
 {% else %}
